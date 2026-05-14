@@ -16,7 +16,6 @@ import UserOrderHistory from "./components/Profile/UserOrderHistory";
 import Settings from "./components/Profile/Settings";
 import AllOrders from "./pages/AllOrders";
 import AddBook from "./pages/AddBook";
-import { SpeedInsights } from "@vercel/speed-insights/react"
 
 const App = () => {
   const dispatch = useDispatch();
@@ -60,7 +59,6 @@ const App = () => {
         <Route path="/view-book-details/:id" element={<ViewBookDetails />} />
       </Routes>
       <Footer />
-       <SpeedInsights /> 
     </div>
   );
 };
