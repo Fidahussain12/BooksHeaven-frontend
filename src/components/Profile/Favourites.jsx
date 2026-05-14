@@ -2,6 +2,9 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import BookCard from "../BookCard/BookCard";
 
+// ✅ Add this line - API URL from environment variable
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:1000';
+
 const Favourites = () => {
   const [FavouriteBooks, setFavouriteBooks] = useState([]);
   const headers = {
@@ -12,8 +15,9 @@ const Favourites = () => {
   useEffect(() => {
     const fetch = async () => {
       try {
+        // ✅ Fixed: Using API_URL instead of hardcoded localhost
         const response = await axios.get(
-          "http://localhost:1000/api/v1/get-favourite-books",
+          `${API_URL}/api/v1/get-favourite-books`,
           { headers }
         );
         setFavouriteBooks(response.data.data);

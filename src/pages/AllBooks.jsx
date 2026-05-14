@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import BookCard from "../components/BookCard/BookCard";
+
+// ✅ Add this line - API URL from environment variable
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:1000';
+
 const AllBooks = () => {
   const [Data, setData] = useState([]);
   const [search, setSearch] = useState("");
@@ -11,8 +15,9 @@ const AllBooks = () => {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
+        // ✅ Fixed: Using API_URL
         const response = await axios.get(
-          "http://localhost:1000/api/v1/get-all-books"
+          `${API_URL}/api/v1/get-all-books`
         );
         console.log("API Response:", response.data);
 

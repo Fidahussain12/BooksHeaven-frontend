@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
+// ✅ Add this line - API URL from environment variable
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:1000';
+
 const Signup = () => {
   const [formData, setFormData] = useState({
     username: "",
@@ -28,7 +31,8 @@ const Signup = () => {
     }
     setLoading(true);
     try {
-      await axios.post("http://localhost:1000/api/v1/sign-up", {
+      // ✅ Fixed: Using API_URL
+      await axios.post(`${API_URL}/api/v1/sign-up`, {
         username: formData.username,
         email: formData.email,
         password: formData.password,

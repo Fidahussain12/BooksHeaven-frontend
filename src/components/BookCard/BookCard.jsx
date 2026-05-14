@@ -2,6 +2,9 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
+// ✅ Add this line - API URL from environment variable
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:1000';
+
 const BookCard = ({ data, favourite }) => {
   const navigate = useNavigate();
   const role = localStorage.getItem("role");
@@ -13,8 +16,9 @@ const BookCard = ({ data, favourite }) => {
         authorization: `Bearer ${localStorage.getItem("token")}`,
         bookid: data._id,
       };
+      // ✅ Fixed: Using API_URL instead of hardcoded localhost
       const response = await axios.put(
-        "http://localhost:1000/api/v1/remove-from-favourite",
+        `${API_URL}/api/v1/remove-from-favourite`,
         {},
         { headers }
       );
@@ -32,8 +36,9 @@ const BookCard = ({ data, favourite }) => {
         authorization: `Bearer ${localStorage.getItem("token")}`,
         bookid: data._id,
       };
+      // ✅ Fixed: Using API_URL instead of hardcoded localhost
       const response = await axios.delete(
-        "http://localhost:1000/api/v1/delete-book",
+        `${API_URL}/api/v1/delete-book`,
         { headers }
       );
       alert(response.data.message);
@@ -87,7 +92,6 @@ const BookCard = ({ data, favourite }) => {
       {/* Admin Buttons - sirf admin ko dikhenge */}
       {role === "admin" && (
         <div className="flex gap-2 mt-3">
- 
           <button
             className="flex-1 py-1.5 sm:py-2 px-3 bg-red-500 hover:bg-red-600 
                        text-white text-xs sm:text-sm font-semibold rounded-lg 

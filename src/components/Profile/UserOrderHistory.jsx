@@ -3,6 +3,9 @@ import axios from "axios";
 import Loader from "../Loader/Loader";
 import { useNavigate } from "react-router-dom";
 
+// ✅ Add this line - API URL from environment variable
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:1000';
+
 const UserOrderHistory = () => {
   const [OrderHistory, setOrderHistory] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -17,8 +20,9 @@ const UserOrderHistory = () => {
   useEffect(() => {
     const fetchOrderHistory = async () => {
       try {
+        // ✅ Fixed: Using API_URL
         const response = await axios.get(
-          "http://localhost:1000/api/v1/get-order-history",
+          `${API_URL}/api/v1/get-order-history`,
           { headers }
         );
         console.log("Order History Response:", response.data);
@@ -42,9 +46,9 @@ const UserOrderHistory = () => {
     try {
       let fullUrl = pdfUrl;
       
-      // Agar local file hai (server pe stored)
+      // Agar local file hai (server pe stored) - ✅ Fixed: Use API_URL instead of localhost:1000
       if (pdfUrl.startsWith("/uploads/")) {
-        fullUrl = `http://localhost:1000${pdfUrl}`;
+        fullUrl = `${API_URL}${pdfUrl}`;
       }
       
       // Agar Google Drive link hai
@@ -79,9 +83,9 @@ const UserOrderHistory = () => {
     try {
       let fullUrl = pdfUrl;
       
-      // Agar local file hai
+      // Agar local file hai - ✅ Fixed: Use API_URL instead of localhost:1000
       if (pdfUrl.startsWith("/uploads/")) {
-        fullUrl = `http://localhost:1000${pdfUrl}`;
+        fullUrl = `${API_URL}${pdfUrl}`;
       }
       
       // Agar Google Drive link hai
@@ -151,7 +155,7 @@ const UserOrderHistory = () => {
         <div className="flex flex-col gap-3 sm:gap-4 pb-16">
           {OrderHistory.map((order) => (
             <div key={order._id} className="bg-zinc-800 rounded-xl p-4">
-              {/* Order Header */}j
+              {/* Order Header */}
               <div className="flex justify-between items-center mb-3 pb-2 border-b border-zinc-700">
                 <div>
                   <p className="text-zinc-400 text-xs">Order ID</p>

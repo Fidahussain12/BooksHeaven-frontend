@@ -4,6 +4,9 @@ import { Outlet, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Loader from "../components/Loader/Loader";
 
+// ✅ Add this line - API URL from environment variable
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:1000';
+
 function Profile() {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
@@ -23,8 +26,9 @@ function Profile() {
 
     const fetchData = async () => {
       try {
+        // ✅ Fixed: Using API_URL
         const response = await axios.get(
-          "http://localhost:1000/api/v1/get-user-information",
+          `${API_URL}/api/v1/get-user-information`,
           { headers }
         );
         console.log("API Response:", response.data);

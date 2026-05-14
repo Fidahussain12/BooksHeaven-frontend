@@ -4,6 +4,9 @@ import { authAction } from "../store/auth";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 
+// ✅ Add this line - API URL from environment variable
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:1000';
+
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
@@ -20,9 +23,10 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-     try {
+    try {
+      // ✅ Fixed: Using API_URL
       const response = await axios.post( 
-        "http://localhost:1000/api/v1/sign-in",
+        `${API_URL}/api/v1/sign-in`,
         formData
       );
       dispatch(authAction.login());

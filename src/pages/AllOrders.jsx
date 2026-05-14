@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+// ✅ Add this line - API URL from environment variable
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:1000';
+
 const AllOrders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -13,8 +16,9 @@ const AllOrders = () => {
 
   const fetchOrders = async () => {
     try {
+      // ✅ Fixed: Using API_URL
       const res = await axios.get(
-        "http://localhost:1000/api/v1/get-all-orders",
+        `${API_URL}/api/v1/get-all-orders`,
         { headers }
       );
       console.log("Orders:", res.data);
@@ -28,8 +32,9 @@ const AllOrders = () => {
 
   const updateStatus = async (orderId, newStatus) => {
     try {
+      // ✅ Fixed: Using API_URL
       await axios.put(
-        `http://localhost:1000/api/v1/update-status/${orderId}`,
+        `${API_URL}/api/v1/update-status/${orderId}`,
         { status: newStatus },
         { headers }
       );
@@ -43,8 +48,9 @@ const AllOrders = () => {
 
   const verifyPayment = async (orderId) => {
     try {
+      // ✅ Fixed: Using API_URL
       await axios.put(
-        `http://localhost:1000/api/v1/verify-payment/${orderId}`,
+        `${API_URL}/api/v1/verify-payment/${orderId}`,
         {},
         { headers }
       );
@@ -61,8 +67,9 @@ const AllOrders = () => {
     if (!confirmed) return;
     
     try {
+      // ✅ Fixed: Using API_URL
       await axios.delete(
-        `http://localhost:1000/api/v1/delete-order/${orderId}`,
+        `${API_URL}/api/v1/delete-order/${orderId}`,
         { headers }
       );
       setOrders((prev) => prev.filter((o) => o._id !== orderId));

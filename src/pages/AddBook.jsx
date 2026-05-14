@@ -1,6 +1,9 @@
 import { useState } from "react";
 import axios from "axios";
 
+// ✅ Add this line - API URL from environment variable
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:1000';
+
 const AddBook = () => {
   const [formData, setFormData] = useState({
     title: "",
@@ -68,8 +71,9 @@ const AddBook = () => {
       formDataToSend.append("url", formData.coverImage);
       formDataToSend.append("pdfFile", pdfFile);  // 🔥 PDF file attached
 
+      // ✅ Fixed: Using API_URL
       const response = await axios.post(
-        "http://localhost:1000/api/v1/add-book",
+        `${API_URL}/api/v1/add-book`,
         formDataToSend,
         {
           headers: {

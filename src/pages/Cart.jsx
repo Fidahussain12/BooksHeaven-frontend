@@ -3,6 +3,9 @@ import axios from "axios";
 import { AiOutlineDelete } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 
+// ✅ Add this line - API URL from environment variable
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:1000';
+
 const Cart = () => {
   const [CartBooks, setCartBooks] = useState([]);
   const [Total, setTotal] = useState(0);
@@ -23,8 +26,9 @@ const Cart = () => {
   // Fetch cart books
   const fetchCart = async () => {
     try {
+      // ✅ Fixed: Using API_URL
       const response = await axios.get(
-        "http://localhost:1000/api/v1/get-user-cart",
+        `${API_URL}/api/v1/get-user-cart`,
         { headers }
       );
       setCartBooks(response.data.data);
@@ -38,8 +42,9 @@ const Cart = () => {
   // Fetch payment details
   const fetchPaymentDetails = async () => {
     try {
+      // ✅ Fixed: Using API_URL
       const response = await axios.get(
-        "http://localhost:1000/api/v1/payment-details",
+        `${API_URL}/api/v1/payment-details`,
         { headers }
       );
       setPaymentDetails(response.data);
@@ -65,8 +70,9 @@ const Cart = () => {
   // Remove from cart
   const handleRemove = async (bookid) => {
     try {
+      // ✅ Fixed: Using API_URL
       const response = await axios.delete(
-        `http://localhost:1000/api/v1/remove-from-cart/${bookid}`,
+        `${API_URL}/api/v1/remove-from-cart/${bookid}`,
         { headers }
       );
       alert(response.data.message);
@@ -79,8 +85,9 @@ const Cart = () => {
   // Place order - create order and show payment
   const handlePlaceOrder = async () => {
     try {
+      // ✅ Fixed: Using API_URL
       const response = await axios.post(
-        "http://localhost:1000/api/v1/place-order",
+        `${API_URL}/api/v1/place-order`,
         { order: CartBooks, total: Total },
         { headers }
       );
@@ -117,8 +124,9 @@ const Cart = () => {
     formData.append("orderId", orderId);
 
     try {
+      // ✅ Fixed: Using API_URL
       const response = await axios.post(
-        "http://localhost:1000/api/v1/upload-slip",
+        `${API_URL}/api/v1/upload-slip`,
         formData,
         {
           headers: {

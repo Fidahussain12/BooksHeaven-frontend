@@ -8,6 +8,9 @@ import { useSelector } from "react-redux";
 import { FaEdit } from "react-icons/fa";
 import { MdOutlineDelete } from "react-icons/md";
 
+// ✅ Add this line - API URL from environment variable
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:1000';
+
 const ViewBookDetails = () => {
   const { id } = useParams();
   const [Data, setData] = useState(null);
@@ -17,8 +20,9 @@ const ViewBookDetails = () => {
   useEffect(() => {
     const fetchBook = async () => {
       try {
+        // ✅ Fixed: Using API_URL
         const response = await axios.get(
-          `http://localhost:1000/api/v1/get-book-by-id/${id}`
+          `${API_URL}/api/v1/get-book-by-id/${id}`
         );
         setData(response.data.data);
       } catch (error) {
@@ -36,11 +40,11 @@ const ViewBookDetails = () => {
     bookid: id,
   };
 
-
   const handleFavourite = async () => {
     try {
+      // ✅ Fixed: Using API_URL
       const response = await axios.put(
-        "http://localhost:1000/api/v1/add-book-to-favourite",
+        `${API_URL}/api/v1/add-book-to-favourite`,
         {},
         { headers }
       );
@@ -48,13 +52,13 @@ const ViewBookDetails = () => {
     } catch (error) {
       alert(error.response?.data?.message || "Something went wrong!");
     }
-  }; // ← closing brace added here
-
+  };
 
   const handleCart = async () => {
     try {
+      // ✅ Fixed: Using API_URL
       const response = await axios.put(
-        "http://localhost:1000/api/v1/add-to-cart",
+        `${API_URL}/api/v1/add-to-cart`,
         {},
         { headers }
       );
@@ -143,8 +147,6 @@ const ViewBookDetails = () => {
                 </button>
               </div>
             )}
-
-        
 
             {!isLoggedIn && (
               <p className="text-zinc-500 text-sm mt-2">

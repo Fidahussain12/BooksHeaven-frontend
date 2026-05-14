@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+// ✅ Add this line - API URL from environment variable
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:1000';
+
 const Settings = () => {
   const [profileData, setProfileData] = useState(null);
   const [username, setUsername] = useState("");
@@ -21,8 +24,9 @@ const Settings = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
+        // ✅ Fixed: Using API_URL
         const response = await axios.get(
-          "http://localhost:1000/api/v1/get-user-information",
+          `${API_URL}/api/v1/get-user-information`,
           { headers }
         );
         setProfileData(response.data);
@@ -43,8 +47,9 @@ const Settings = () => {
     }
     setProfileLoading(true);
     try {
+      // ✅ Fixed: Using API_URL
       const response = await axios.put(
-        "http://localhost:1000/api/v1/update-profile",
+        `${API_URL}/api/v1/update-profile`,
         { username, email },
         { headers }
       );
@@ -63,8 +68,9 @@ const Settings = () => {
     }
     setAddressLoading(true);
     try {
+      // ✅ Fixed: Using API_URL
       const response = await axios.put(
-        "http://localhost:1000/api/v1/update-address",
+        `${API_URL}/api/v1/update-address`,
         { address },
         { headers }
       );
@@ -91,8 +97,9 @@ const Settings = () => {
     }
     setPasswordLoading(true);
     try {
+      // ✅ Fixed: Using API_URL
       const response = await axios.put(
-        "http://localhost:1000/api/v1/update-password",
+        `${API_URL}/api/v1/update-password`,
         { oldPassword, newPassword },
         { headers }
       );
@@ -269,4 +276,4 @@ const Settings = () => {
   );
 };
 
-export default Settings; 
+export default Settings;
